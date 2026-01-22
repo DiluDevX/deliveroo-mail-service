@@ -2,11 +2,11 @@
   "name": "microservice-template",
   "version": "1.0.0",
   "description": "Template for building microservices with Express, Prisma, and TypeScript",
-  "main": "dist/server.js",
+  "main": "dist/server.ts",
   "scripts": {
     "build": "tsc",
     "dev": "nodemon src/server.ts",
-    "start": "node dist/server.js",
+    "start": "node dist/server.ts",
     "format:fix": "prettier --write .",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
