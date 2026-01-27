@@ -65,18 +65,19 @@ Visit:
 
 ### Email Operations
 
-#### Request Password Reset
+#### Send Password Reset Email
 
 ```http
-POST /api/mail/request-password-reset
+POST /api/mail/password-reset
 Content-Type: application/json
 
 {
-  "email": "user@example.com"
+  "email": "user@example.com",
+  "resetToken": "secure-token-here"
 }
 ```
 
-Sends a password reset email to the specified email address with a secure reset token.
+Sends a password reset email to the specified email address with a secure reset link.
 
 ### Health Checks
 

@@ -10,6 +10,10 @@ const logoUrl = mailConfig.logoUrl;
 const supportEmail = mailConfig.supportEmail;
 const appUrl = mailConfig.appUrl;
 
+if (!companyName || !companyEmail || !logoUrl || !supportEmail || !appUrl) {
+  throw new Error('Mail configuration missing');
+}
+
 const transporter = nodemailer.createTransport({
   host: mailConfig.smtp.host,
   port: mailConfig.smtp.port,
@@ -39,14 +43,12 @@ export const sendMail = async ({
     });
   } catch (error) {
     console.error('Error sending email:', error);
+    throw error;
   }
 };
 
 export const sendResetPasswordEmail = async (to: string, token: string) => {
-  if (!companyName || !logoUrl || !supportEmail || !companyEmail || !appUrl) {
-    throw new Error('Missing required company configuration for sending reset password email.');
-  }
-  const resetUrl = `${appUrl}/reset-password?token=${token}`;
+  const resetUrl = `${appUrl}/reset-password?token=${encodeURIComponent(token)}`;
   const html = resetPasswordTemplate({
     companyName,
     logoUrl,

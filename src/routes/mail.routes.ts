@@ -5,6 +5,6 @@ import { resetPasswordBodySchema } from '../schemas/mail.schema';
 
 const router = Router();
 
-router.post('/send/password-reset', validateBody(resetPasswordBodySchema), requestPasswordReset);
+router.post('/password-reset', validateBody(resetPasswordBodySchema), requestPasswordReset);
 
 export default router;
