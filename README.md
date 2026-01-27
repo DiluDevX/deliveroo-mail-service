@@ -57,9 +57,9 @@ yarn dev
 
 Visit:
 
-- API: http://localhost:3000
-- Swagger Docs: http://localhost:3000/api-docs
-- Health Check: http://localhost:3000/health
+- API: <http://localhost:3000>
+- Swagger Docs: <http://localhost:3000/api-docs>
+- Health Check: <http://localhost:3000/health>
 
 ## API Endpoints
 
@@ -89,7 +89,7 @@ Sends a password reset email to the specified email address with a secure reset 
 
 ## Project Structure
 
-```
+```text
 ├── .aws/                    # AWS ECS task definitions
 ├── .github/workflows/       # CI/CD pipelines
 ├── src/
