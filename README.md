@@ -73,7 +73,7 @@ Content-Type: application/json
 
 {
   "email": "user@example.com",
-  "resetToken": "secure-token-here"
+  "token": "secure-token-here"
 }
 ```
 
@@ -81,11 +81,9 @@ Sends a password reset email to the specified email address with a secure reset 
 
 ### Health Checks
 
-| Endpoint            | Purpose            |
-| ------------------- | ------------------ |
-| `GET /health`       | Basic health check |
-| `GET /health/ready` | Readiness probe    |
-| `GET /health/live`  | Liveness probe     |
+| Endpoint         | Purpose            |
+| ---------------- | ------------------ |
+| `GET /api/health` | Basic health check |
 
 ## Project Structure
 
@@ -127,7 +125,6 @@ Sends a password reset email to the specified email address with a secure reset 
 The service includes professional, responsive HTML email templates:
 
 - **Password Reset** (`src/templates/reset-password.ts`) - Styled email with reset button and security information
-- **Verification** (`src/templates/verification.html`) - Email verification template
 
 To add a new template:
 
@@ -146,10 +143,10 @@ Edit `src/config/mail.config.ts` to configure:
 ```typescript
 export const mailConfig = {
   smtp: {
-    host: process.env.SMTP_HOST,
-    port: parseInt(process.env.SMTP_PORT || '587'),
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
+    host: process.env.MAIL_HOST || 'sandbox.smtp.mailtrap.io',
+    port: Number(process.env.SMTP_PORT) || 2525,
+    user: process.env.SMTP_USER || '',
+    pass: process.env.SMTP_PASS || '',
   },
   companyName: process.env.COMPANY_NAME,
   companyEmail: process.env.COMPANY_EMAIL,
@@ -193,8 +190,10 @@ Push to `main` branch to trigger automatic deployment, or manually trigger via G
 
 ```typescript
 import { validateBody } from './middleware/validate.middleware';
+import { resetPasswordBodySchema } from '../schemas/mail.schema';
+import { requestPasswordReset } from '../controllers/mail.controller';
 
-router.post('/mail/send', validateBody(emailSchema), handler);
+router.post('/password-reset', validateBody(resetPasswordBodySchema), requestPasswordReset);
 ```
 
 All requests are validated using Zod schemas defined in `src/schemas/`.
