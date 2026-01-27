@@ -58,4 +58,4 @@ COPY prisma ./prisma
 
 EXPOSE 3000
 
-CMD ["node", "dist/server.ts"]
+CMD ["node", "dist/server.js"]
