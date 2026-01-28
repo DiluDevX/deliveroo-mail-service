@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
 
 // Routes
-app.use('/api', healthRoutes);
+app.use( healthRoutes);
 app.use('/api/mail', mailRoutes);
 
 // API Documentation
