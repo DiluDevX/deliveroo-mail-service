@@ -81,9 +81,9 @@ Sends a password reset email to the specified email address with a secure reset 
 
 ### Health Checks
 
-| Endpoint         | Purpose            |
-| ---------------- | ------------------ |
-| `GET /api/health` | Basic health check |
+| Endpoint      | Purpose            |
+| ------------- | ------------------ |
+| `GET /health` | Basic health check |
 
 ## Project Structure
 
