@@ -42,7 +42,7 @@ export const sendMail = async ({
       html,
     });
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('[MailService] Error sending email:', error);
     throw error;
   }
 };

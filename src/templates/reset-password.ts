@@ -1,5 +1,5 @@
 export interface ResetPasswordTemplateParams {
-  companyName: string | null;
+  companyName: string;
   logoUrl: string;
   resetUrl: string;
   supportEmail: string;

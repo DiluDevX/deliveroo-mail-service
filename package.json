@@ -5,7 +5,7 @@
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon src/server.ts",
+    "dev": "doppler run -- nodemon src/server.ts",
     "start": "node dist/server.js",
     "format:fix": "prettier --write .",
     "lint": "eslint src",
