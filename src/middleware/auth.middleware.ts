@@ -10,10 +10,6 @@ declare module 'express-serve-static-core' {
   }
 }
 
-/**
- * Middleware to authenticate requests using JWT tokens.
- * Extracts and verifies the Bearer token from Authorization header.
- */
 export function authenticate(req: Request, _res: Response, next: NextFunction): void {
   try {
     const authHeader = req.headers.authorization;
@@ -25,8 +21,6 @@ export function authenticate(req: Request, _res: Response, next: NextFunction): 
     const token = authHeader.substring(7);
 
     if (config.auth.validationMode === 'remote') {
-      // For remote validation, you would call the auth service here
-      // This is a placeholder - implement based on your auth service API
       logger.warn('Remote token validation not implemented, falling back to local');
     }
 
