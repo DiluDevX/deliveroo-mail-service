@@ -48,7 +48,7 @@ export const sendMail = async ({
 };
 
 export const sendResetPasswordEmail = async (to: string, token: string) => {
-  const resetUrl = `${appUrl}/reset-password?token=${encodeURIComponent(token)}`;
+  const resetUrl = `${appUrl}/account/reset-password?token=${encodeURIComponent(token)}`;
   const html = resetPasswordTemplate({
     companyName,
     logoUrl,
