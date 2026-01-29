@@ -31,8 +31,6 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Generate Prisma Client
-        run: yarn prisma:generate
 
       - name: Run ESLint
         run: yarn lint
@@ -60,8 +58,6 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Generate Prisma Client
-        run: yarn prisma:generate
 
       - name: Build
         run: yarn build

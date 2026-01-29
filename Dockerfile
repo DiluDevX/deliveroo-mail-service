@@ -1,61 +1,35 @@
-# syntax=docker/dockerfile:1
 
-ARG NODE_VERSION=22.12.0
 
-################################################################################
-# Base image with Node.js
-FROM node:${NODE_VERSION}-alpine AS base
+ARG NODE_VERSION=24.11.1
+
+FROM node:${NODE_VERSION}-alpine as base
 WORKDIR /app
+RUN corepack enable && corepack prepare yarn@stable --activate
 
-# Enable corepack for yarn
-RUN corepack enable
+FROM base as deps
+COPY package.json yarn.lock ./
+RUN npm install
 
-################################################################################
-# Install production dependencies
-FROM base AS deps
-
-COPY package.json yarn.lock .yarnrc.yml ./
+FROM deps as build
 COPY .yarn ./.yarn
-
-RUN --mount=type=cache,target=/root/.yarn \
-    yarn workspaces focus --production
-
-################################################################################
-# Build the application
-FROM base AS build
-
-COPY package.json yarn.lock .yarnrc.yml ./
-COPY .yarn ./.yarn
-
-RUN --mount=type=cache,target=/root/.yarn \
-    yarn install --immutable
-
-# Generate Prisma client
-COPY prisma ./prisma
-RUN yarn prisma:generate
-
-# Copy source and build
+COPY .yarnrc.yml ./
 COPY tsconfig.json ./
 COPY src ./src
+RUN npm run build
 
-RUN yarn build
-
-################################################################################
-# Production image
 FROM base AS final
 
 ENV NODE_ENV=production
+# Install Doppler CLI as root
+RUN apk add --no-cache curl gnupg \
+    && curl -Ls https://cli.doppler.com/install.sh | sh
 
-# Run as non-root user
 USER node
 
-# Copy built assets
+COPY package.json ./
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
-COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
-COPY package.json ./
-COPY prisma ./prisma
 
-EXPOSE 3000
+EXPOSE 6000
 
-CMD ["node", "dist/server.js"]
+CMD ["doppler", "run", "--project", "deliveroo-mail-service", "--config", "dev", "--", "node", "dist/server.js"]

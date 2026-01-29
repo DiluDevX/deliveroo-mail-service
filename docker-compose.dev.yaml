@@ -13,7 +13,6 @@ services:
       - LOG_LEVEL=debug
     volumes:
       - ./src:/app/src:ro
-      - ./prisma:/app/prisma:ro
     depends_on:
       db:
         condition: service_healthy

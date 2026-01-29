@@ -35,6 +35,3 @@ yarn-error.log*
 # Testing
 coverage
 
-# Prisma
-prisma/*.db
-prisma/*.db-journal
